@@ -6,6 +6,8 @@ export const Container = styled.ImageBackground`
   justify-content: center;
   padding: 52px;
   background-color: ${theme.COLORS.GRAY_800};
+
+  padding-bottom: 300px;
 `;
 
 export const Title = styled.Text`
