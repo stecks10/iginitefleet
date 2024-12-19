@@ -10,14 +10,14 @@ export const Container = styled.ImageBackground`
 
 export const Title = styled.Text`
   font-family: ${theme.FONT_FAMILY.BOLD};
-  font-size: ${theme.FONT_SIZE.XXXL};
+  font-size: ${theme.FONT_SIZE.XXXL}px;
   color: ${theme.COLORS.BRAND_LIGHT};
   text-align: center;
 `;
 
 export const Slogan = styled.Text`
   font-family: ${theme.FONT_FAMILY.REGULAR};
-  font-size: ${theme.FONT_SIZE.MD};
+  font-size: ${theme.FONT_SIZE.MD}px;
   color: ${theme.COLORS.GRAY_100};
   text-align: center;
 
