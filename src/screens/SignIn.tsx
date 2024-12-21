@@ -1,4 +1,5 @@
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { Realm, useApp } from '@realm/react';
 import React, { useState } from 'react';
 import backgroundImg from '../assets/background.png';
 import { Button } from '../components/Button';
@@ -15,6 +16,7 @@ GoogleSignin.configure({
 
 export function Signin() {
   const [isAuthenticating, setIsAuthenticating] = useState(false);
+  const app = useApp();
 
   async function handleGoogleSignIn() {
     try {
@@ -22,7 +24,10 @@ export function Signin() {
 
       const { idToken } = await GoogleSignin.signIn();
 
-      if (!idToken) {
+      if (idToken) {
+        const credentials = Realm.Credentials.jwt(idToken);
+
+        await app.logIn(credentials);
       } else {
         Alert.alert('Não foi possível realizar o login');
       }
