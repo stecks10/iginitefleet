@@ -7,7 +7,7 @@ import {
 import { REALM_APP_ID } from '@env';
 import { AppProvider, UserProvider } from '@realm/react';
 
-import { SafeAreaView, StatusBar } from 'react-native';
+import { StatusBar } from 'react-native';
 import { ThemeProvider } from 'styled-components';
 import { Loading } from './src/components/Loading';
 import { Home } from './src/screens/Home';
@@ -32,13 +32,10 @@ export default function App() {
           backgroundColor='transparent'
           translucent
         />
-        <SafeAreaView
-          style={{ flex: 1, backgroundColor: theme.COLORS.GRAY_700 }}
-        >
-          <UserProvider fallback={Signin}>
-            <Home />
-          </UserProvider>
-        </SafeAreaView>
+
+        <UserProvider fallback={Signin}>
+          <Home />
+        </UserProvider>
       </ThemeProvider>
     </AppProvider>
   );
