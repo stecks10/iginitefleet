@@ -1,3 +1,4 @@
+import { Image } from 'expo-image';
 import styled from 'styled-components/native';
 import theme from '../../theme';
 
@@ -21,4 +22,10 @@ export const Name = styled.Text`
   color: ${theme.COLORS.GRAY_100};
   font-size: ${theme.FONT_SIZE.LG}px;
   font-family: ${theme.FONT_FAMILY.BOLD};
+`;
+
+export const Picture = styled(Image)`
+  width: 54px;
+  height: 54px;
+  border-radius: 54px;
 `;
