@@ -32,10 +32,7 @@ export class Historic extends Realm.Object<Historic> {
 
     properties: {
       _id: 'uuid',
-      user_id: {
-        type: 'string',
-        indexed: true,
-      },
+      user_id: 'string',
       license_plate: 'string',
       description: 'string',
       status: 'string',
