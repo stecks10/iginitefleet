@@ -31,6 +31,13 @@ export function Departure() {
         'A placa é invalida. Por favor, informe a placa correta do veículo.'
       );
     }
+    if (description.trim().length === 0) {
+      descriptionRef.current?.focus();
+      return Alert.alert(
+        'Finalidade inválida',
+        'Por favor, informe a finalidade do veículo.'
+      );
+    }
   }
 
   return (
