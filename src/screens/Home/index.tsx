@@ -28,7 +28,11 @@ export function Home() {
   }, []);
 
   function handleRegisterMovement() {
-    navigate('departure');
+    if (vehicleInUse?._id) {
+      return navigate('arrival', { id: vehicleInUse._id.toString() });
+    } else {
+      return navigate('departure');
+    }
   }
   return (
     <Container>
