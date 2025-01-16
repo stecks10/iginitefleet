@@ -1,4 +1,6 @@
 import { REALM_APP_ID } from '@env';
+import './src/libs/dayjs';
+
 import {
   Roboto_400Regular,
   Roboto_700Bold,
