@@ -4,6 +4,7 @@ import theme from '../../theme';
 import { Container, Departure, Info, LicensePlate } from './styles';
 
 export type HistoricCardProps = {
+  id: string;
   licensePlate: string;
   created: string;
   isSync: boolean;
