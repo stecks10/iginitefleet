@@ -23,7 +23,7 @@
     "expo-dev-client": "~5.0.6",
     "expo-font": "~13.0.2",
     "expo-image": "~2.0.3",
-    "expo-splash-screen": "~0.29.18",
+    "expo-splash-screen": "~0.29.20",
     "expo-status-bar": "~2.0.0",
     "expo-system-ui": "^4.0.6",
     "phosphor-react-native": "^2.2.2",

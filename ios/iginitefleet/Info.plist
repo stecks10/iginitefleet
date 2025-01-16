@@ -36,12 +36,6 @@
           <string>exp+iginitefleet</string>
         </array>
       </dict>
-      <dict>
-        <key>CFBundleURLSchemes</key>
-        <array>
-          <string>com.googleusercontent.apps.700478557837-j83fhpmjk1b4qnp012c6ca8bkpuj712c</string>
-        </array>
-      </dict>
     </array>
     <key>CFBundleVersion</key>
     <string>1</string>

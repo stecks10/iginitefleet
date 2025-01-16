@@ -1,15 +1,14 @@
 import { useNavigation } from '@react-navigation/native';
 import dayjs from 'dayjs';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Alert, FlatList } from 'react-native';
 
 import { useQuery, useRealm } from '../../libs/realm';
 import { Historic } from '../../libs/realm/schemas/Historic';
 
 import { CarStatus } from '../../components/CarStatus';
-import { HomeHeader } from '../../components/HomeHeader';
-
 import { HistoricCard, HistoricCardProps } from '../../components/HistoricCard';
+import { HomeHeader } from '../../components/HomeHeader';
 import { Container, Content, Label, Title } from './styles';
 
 export function Home() {
@@ -19,19 +18,18 @@ export function Home() {
   );
 
   const { navigate } = useNavigation();
-
   const historic = useQuery(Historic);
   const realm = useRealm();
 
-  function handleRegisterMovement() {
+  const handleRegisterMovement = useCallback(() => {
     if (vehicleInUse?._id) {
       navigate('arrival', { id: vehicleInUse._id.toString() });
     } else {
       navigate('departure');
     }
-  }
+  }, [navigate, vehicleInUse]);
 
-  function fetchVehicleInUse() {
+  const fetchVehicleInUse = useCallback(() => {
     try {
       const vehicle = historic.filtered("status='departure'")[0];
       setVehicleInUse(vehicle);
@@ -42,46 +40,55 @@ export function Home() {
       );
       console.log(error);
     }
-  }
+  }, [historic]);
 
-  function fetchHistoric() {
+  const fetchHistoric = useCallback(() => {
     try {
       const response = historic.filtered(
         "status='arrival' SORT(created_at DESC)"
       );
-      const formattedHistoric = response.map((item) => {
-        return {
-          id: item._id.toString(),
-          licensePlate: item.license_plate,
-          isSync: false,
-          created: dayjs(item.created_at).format(
-            '[Saída em] DD/MM/YYYY [às] HH:mm'
-          ),
-        };
-      });
+      const formattedHistoric = response.map((item) => ({
+        id: item._id.toString(),
+        licensePlate: item.license_plate,
+        isSync: false,
+        created: dayjs(item.created_at).format(
+          '[Saída em] DD/MM/YYYY [às] HH:mm'
+        ),
+      }));
       setVehicleHistoric(formattedHistoric);
     } catch (error) {
       console.log(error);
       Alert.alert('Histórico', 'Não foi possível carregar o histórico.');
     }
-  }
+  }, [historic]);
 
-  function handleHistoricDetails(id: string) {
-    navigate('arrival', { id });
-  }
+  const handleHistoricDetails = useCallback(
+    (id: string) => {
+      navigate('arrival', { id });
+    },
+    [navigate]
+  );
 
   useEffect(() => {
     fetchVehicleInUse();
-  }, []);
+  }, [fetchVehicleInUse]);
 
   useEffect(() => {
-    realm.addListener('change', () => fetchVehicleInUse());
-    return () => realm.removeListener('change', fetchVehicleInUse);
-  }, []);
+    if (realm && !realm.isClosed) {
+      const realmListener = () => fetchVehicleInUse();
+      realm.addListener('change', realmListener);
+
+      return () => {
+        if (!realm.isClosed) {
+          realm.removeListener('change', realmListener);
+        }
+      };
+    }
+  }, [realm, fetchVehicleInUse]);
 
   useEffect(() => {
     fetchHistoric();
-  }, [historic]);
+  }, [fetchHistoric]);
 
   return (
     <Container>
